@@ -21,8 +21,6 @@
 // *WHEN the password is generated
 // *THEN the password is either displayed in an alert or written to the page
 
-
-// Assignment Code
 var generateBtn = document.querySelector("#generate");
 
 var criteria = {
@@ -46,8 +44,6 @@ criteria.length + " characters\n" +
 "Special characters: " + criteria.specChar + "\n"
 )
 
-// Write password to the #password input
-
 function writePassword() {
   criteria.length = prompt("How many characters would you like? (8-128)")
 
@@ -55,43 +51,55 @@ function writePassword() {
     criteria.length = prompt("Must be between 8 and 128 characters.")
   } 
 
-  criteria.lowerCase = confirm(criteria.length + " characters\n \n" +
+  criteria.lowerCase = confirm(criteria.length + " characters\n" +
+  "Lowercase: " + "\n" +
+  "Uppercase: " + "\n" +
+  "Numeric: " + "\n" + 
+  "Special characters: " + "\n \n" + 
   "Include lowercase characters? (OK for yes, CANCEL for no.")
   
   criteria.upperCase = confirm(criteria.length + " characters\n" +
-  "Lowercase: " + criteria.lowerCase + "\n \n" + 
+  "Lowercase: " + criteria.lowerCase + "\n" +
+  "Uppercase: " + "\n" +
+  "Numeric: " + "\n" + 
+  "Special characters: " + "\n \n" + 
   "Include uppercase characters? (OK for yes, CANCEL for no.")
   
   criteria.numeric = confirm(criteria.length + " characters\n" +
   "Lowercase: " + criteria.lowerCase + "\n" +
-  "Uppercase: " + criteria.upperCase + "\n \n" + 
+  "Uppercase: " + criteria.upperCase + "\n" +
+  "Numeric: " + "\n" + 
+  "Special characters: " + "\n \n" + 
   "Include numeric characters? (OK for yes, CANCEL for no.")
   
   criteria.specChar = confirm(criteria.length + " characters\n" +
   "Lowercase: " + criteria.lowerCase + "\n" +
   "Uppercase: " + criteria.upperCase + "\n" +
-  "Numeric: " + criteria.numeric + "\n \n" + 
+  "Numeric: " + criteria.numeric + "\n" +
+  "Special characters: " + "\n \n" + 
   "Include special characters? (OK for yes, CANCEL for no.")
 
-  var confirmation = confirm(criteria.length + " characters\n" +
-  "Lowercase: " + criteria.lowerCase + "\n" +
-  "Uppercase: " + criteria.upperCase + "\n" +
-  "Numeric: " + criteria.numeric + "\n" +
-  "Special characters: " + criteria.specChar + "\n \n" +
-  "These are your criteria. Confirm?"
-  )
-
-  if (confirmation == false){
-    writePassword()
+  if (criteria.lowerCase == false && criteria.upperCase == false && criteria.numeric== false && criteria.specChar == false) {
+    alert("At least one criteria must be selected.")
   } else {
-    generatePassword()
-  }  
+
+    var confirmation = confirm(criteria.length + " characters\n" +
+    "Lowercase: " + criteria.lowerCase + "\n" +
+    "Uppercase: " + criteria.upperCase + "\n" +
+    "Numeric: " + criteria.numeric + "\n" +
+    "Special characters: " + criteria.specChar + "\n \n" +
+    "These are your criteria. Confirm?"
+    )
+
+    //TODO fix crash that occurs if nothing is selected
+
+    if (confirmation == false){
+      writePassword()
+    } else {
+      generatePassword()
+    }
+  }
 }
-
-// var password = generatePassword();
-// var passwordText = document.querySelector("#password");
-
-// passwordText.value = password;
 
 function generatePassword() {
   var i = 0
@@ -118,7 +126,7 @@ function generatePassword() {
       password.push(specials[randomvalue]);
       i++
     }
-  }console.log(password)
+  }console.log("Raw password: ", password)
 
   var i = 0
 
@@ -127,12 +135,11 @@ function generatePassword() {
     password.push(password[randomvalue])
     password.splice(randomvalue, 1)
     i++
-  }console.log(password)
+  }console.log("Shuffled password: ", password)
 
   var passwordText = document.querySelector("#password");
   passwordText.value = password.join("");
 }
 
-// Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
