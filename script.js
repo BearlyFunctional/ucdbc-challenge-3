@@ -91,8 +91,6 @@ function writePassword() {
     "These are your criteria. Confirm?"
     )
 
-    //TODO fix crash that occurs if nothing is selected
-
     if (confirmation == false){
       writePassword()
     } else {
